@@ -1,22 +1,17 @@
 import logging
+from logging import Logger
 
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s %(levelname)8s %(process)d --- [%(threadName)s] %(filename)s-%(funcName)s: %(message)s",
+formatter = logging.Formatter(
+    fmt="%(asctime)s %(levelname)8s %(process)d --- [%(threadName)s] %(filename)s-%(funcName)s: %(message)s",
     datefmt="%Y-%m-%d %H:%M:%S"
 )
+handler = logging.StreamHandler()
+handler.setFormatter(formatter)
+handler.setLevel(logging.INFO)
 
-def info(msg: str):
-    logging.info(msg)
-
-def warning(msg: str):
-    logging.warning(msg)
-
-def error(msg: str):
-    logging.error(msg)
+logger = Logger('vlogger')
+logger.addHandler(handler)
 
 if __name__=="__main__":
-    info('nihao')
-    warning('azhe')
-    error('hehe')
+    logger.info('你好')
