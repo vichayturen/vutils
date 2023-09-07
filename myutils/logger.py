@@ -3,19 +3,20 @@ import logging
 
 logging.basicConfig(
     level=logging.INFO,
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s-%(funcName)s",
-    datefmt=""
+    format="%(asctime)s %(levelname)s %(process)d --- [%(threadName)s] %(filename)s-%(funcName)s: %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S"
 )
 
-class Logger:
-    def __init__(self):
-        pass
+def info(msg: str):
+    logging.info(msg)
 
-    def info(self, msg: str):
-        logging.info(msg)
-    
-    def warning(self, msg: str):
-        logging.warning(msg)
+def warning(msg: str):
+    logging.warning(msg)
 
-    def error(self, msg: str):
-        logging.error(msg)
+def error(msg: str):
+    logging.error(msg)
+
+if __name__=="__main__":
+    info('nihao')
+    warning('azhe')
+    error('hehe')
