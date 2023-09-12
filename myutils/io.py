@@ -1,5 +1,6 @@
 import csv
 import json
+from typing import List
 
 
 def jsonload(path: str):
@@ -10,6 +11,21 @@ def jsonload(path: str):
 def jsondump(data, path: str):
     with open(path, 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
+
+def jsonldump(data: List[dict], path: str) -> None:
+    jsonlines = []
+    for d in data:
+        string = json.dumps(d, ensure_ascii=False)
+        jsonlines.append(string)
+    with open(path, 'w', encoding='utf-8') as f:
+        f.writelines(jsonlines)
+
+def jsonlload(path: str) -> list:
+    with open(path, 'r', encoding='utf-8') as f:
+        data = f.readlines()
+    for i, string in enumerate(data):
+        data[i] = json.loads(string)
+    return data
 
 def txtdump(data, path: str):
     with open(path, 'w', encoding='utf-8') as f:
