@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="myutils",
-    version="1.0.2.dev",
+    version="1.0.3.dev",
     author="Vichayturen",
     author_email="vichayturen@gmail.com",
     description="",
