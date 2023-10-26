@@ -1,11 +1,11 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="myutils",
-    version="1.0.3.dev",
+    name="vtils",
+    version="1.0.4.dev",
     author="Vichayturen",
     author_email="vichayturen@gmail.com",
-    description="",
+    description="vichayturen's utils",
 
     # 项目主页
     url="", 
