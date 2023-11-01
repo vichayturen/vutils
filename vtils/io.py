@@ -16,7 +16,7 @@ def jsonldump(data: List[dict], path: str) -> None:
     jsonlines = []
     for d in data:
         string = json.dumps(d, ensure_ascii=False)
-        jsonlines.append(string)
+        jsonlines.append(string+'\n')
     with open(path, 'w', encoding='utf-8') as f:
         f.writelines(jsonlines)
 
