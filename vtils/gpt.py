@@ -5,6 +5,9 @@ from typing import Literal
 
 optional_models = Literal['gpt-3.5-turbo', 'gpt-3.5-turbo-16k', 'gpt-4', 'gpt-4-32k']
 def call_gpt(prompt: str, api_key: str=None, api_base: str=None, model: optional_models='gpt-3.5-turbo', **kwargs) -> str:
+    """
+    调用chatgpt
+    """
     if api_key is not None:
         openai.api_key = api_key
     if api_base is not None:

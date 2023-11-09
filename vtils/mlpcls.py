@@ -52,6 +52,9 @@ class ResidualBlock(nn.Module):
         return self.lnorm(out + res)
 
 class MlpCls(nn.Module):
+    """
+    MLP分类模型，基于多层残差神经网络
+    """
     def __init__(self, config: MlpClsConfig):
         super().__init__()
         self.config = config
@@ -120,5 +123,30 @@ def evaluate(
     model.eval()
     y = model(test_features)
     y_result = torch.argmax(y, dim=-1)
-    acc = torch.sum(torch.equal(y_result, test_labels)) / test_features.size(0)
+    acc = torch.sum(y_result == test_labels) / test_features.size(0)
     return acc
+
+def train_val_split(features: torch.Tensor, labels: torch.Tensor, group: int=1):
+    val_label_count = {}
+    train_features = []
+    train_labels = []
+    val_features = []
+    val_labels = []
+    for i in range(features.size(0)):
+        label = int(labels[i])
+        if label not in val_label_count:
+            val_features.append(features[i, :].tolist())
+            val_labels.append(label)
+            val_label_count[label] = 1
+        elif val_label_count[label] < group:
+            val_features.append(features[i, :].tolist())
+            val_labels.append(label)
+            val_label_count[label] += 1
+        else:
+            train_features.append(features[i, :].tolist())
+            train_labels.append(label)
+    train_features = torch.tensor(train_features)
+    train_labels = torch.tensor(train_labels, dtype=torch.long)
+    val_features = torch.tensor(val_features)
+    val_labels = torch.tensor(val_labels, dtype=torch.long)
+    return train_features, train_labels, val_features, val_labels

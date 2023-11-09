@@ -48,3 +48,11 @@ def csvdump(data: list, path: str) -> None:
     with open(path, 'w', encoding='utf-8', newline='') as f:
         writer = csv.writer(f)
         writer.writerows(data)
+
+def add_tail(path: str, tail: str) -> str:
+    """
+    给路径文件在扩展名之前添加一个尾巴
+    """
+    paths = path.split('.')
+    paths = paths[:-1] + [tail] + paths[-1]
+    return ''.join(paths)
