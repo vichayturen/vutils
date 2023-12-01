@@ -1,2 +1,6 @@
 vutils.egg-info
 /build
+/src/**/*.c
+/src/**/*.so
+/src/**/*.pyd
+/dist
