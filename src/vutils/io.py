@@ -51,7 +51,7 @@ def csvdump(data: list, path: str) -> None:
 
 def add_tail(path: str, tail: str) -> str:
     """
-    给路径文件在扩展名之前添加一个尾巴
+    给路径字符串在扩展名之前添加一个尾巴
     """
     paths = path.split('.')
     paths = paths[:-1] + [tail] + paths[-1]
