@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="vutils",
-    version="1.0.7",
+    version="1.1.0",
     author="Vichayturen",
     author_email="vichayturen@gmail.com",
     description="vichayturen's utils",
