@@ -13,5 +13,5 @@ handler.setLevel(logging.INFO)
 logger = Logger('vlogger')
 logger.addHandler(handler)
 
-if __name__=="__main__":
+if __name__ == "__main__":
     logger.info('你好')
