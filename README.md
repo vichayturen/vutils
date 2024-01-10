@@ -1,5 +1,10 @@
 # vutils
 
+## 安装方法
+```shell
+pip install git+https://github.com/vichayturen/myutils.git
+```
+
 ## 使用方法
 
 ### 文件读写
