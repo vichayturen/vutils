@@ -5,7 +5,7 @@ import torch
 from torch import nn
 from torch.nn import functional as F
 from torch.utils.data import TensorDataset, DataLoader
-from myutils.logger import logger
+from vutils.log import logger
 
 class MlpClsConfig:
     def __init__(self,

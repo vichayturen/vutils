@@ -4,3 +4,4 @@ vutils.egg-info
 /src/**/*.so
 /src/**/*.pyd
 /dist
+/test.py
