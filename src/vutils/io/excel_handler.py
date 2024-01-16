@@ -1,10 +1,18 @@
 import pandas as pd
 from typing import List, Union, Any
+from ..log import logger
 
 
 class ExcelHandler:
-    def __init__(self, excel_file: str, sheet_name: str = "Sheet1"):
-        self.df = pd.read_excel(excel_file, sheet_name=sheet_name)
+    def __init__(self, excel_file: str = None, columns: List[str] = None, sheet_name: str = "Sheet1"):
+        if excel_file is not None:
+            if columns is not None:
+                logger.warning("Argument `excel_file` is not None so `columns` will be ignored!")
+            self.df = pd.read_excel(excel_file, sheet_name=sheet_name)
+        elif columns is not None:
+            self.df = pd.DataFrame(columns=columns)
+        else:
+            raise ValueError("Argument `excel_file` or `columns` must not be None together!")
 
     def getColumns(self) -> List[str]:
         return self.df.columns.values.tolist()
@@ -36,12 +44,3 @@ class ExcelHandler:
 
     def __str__(self):
         return str(self.df)
-
-
-if __name__ == '__main__':
-    excel = ExcelHandler('./test.xlsx', 'Sheet1')
-    print(excel)
-    excel.fillNanFromMergeUnit(['问题', '分类'])
-    print(excel)
-    print(excel.getColumns())
-    print(excel[4]['段落'])
