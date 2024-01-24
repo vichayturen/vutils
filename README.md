@@ -2,7 +2,7 @@
 
 ## 安装方法
 ```shell
-pip install git+https://github.com/vichayturen/myutils.git
+pip install vutils
 ```
 
 ## 使用方法
