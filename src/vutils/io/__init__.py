@@ -11,14 +11,14 @@ def jsonload(path: str):
 
 def jsondump(data, path: str):
     pre_dir, file = os.path.split(path)
-    if not os.path.exists(pre_dir):
+    if pre_dir != "" and not os.path.exists(pre_dir):
         os.makedirs(pre_dir)
     with open(path, 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
 
 def jsonldump(data: List[dict], path: str) -> None:
     pre_dir, file = os.path.split(path)
-    if not os.path.exists(pre_dir):
+    if pre_dir != "" and not os.path.exists(pre_dir):
         os.makedirs(pre_dir)
     jsonlines = []
     for d in data:
@@ -36,7 +36,7 @@ def jsonlload(path: str) -> list:
 
 def txtdump(data, path: str):
     pre_dir, file = os.path.split(path)
-    if not os.path.exists(pre_dir):
+    if pre_dir != "" and not os.path.exists(pre_dir):
         os.makedirs(pre_dir)
     with open(path, 'w', encoding='utf-8') as f:
         f.write(data)
@@ -56,7 +56,7 @@ def csvload(path: str) -> list:
 
 def csvdump(data: list, path: str) -> None:
     pre_dir, file = os.path.split(path)
-    if not os.path.exists(pre_dir):
+    if pre_dir != "" and not os.path.exists(pre_dir):
         os.makedirs(pre_dir)
     with open(path, 'w', encoding='utf-8', newline='') as f:
         writer = csv.writer(f)
