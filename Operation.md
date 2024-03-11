@@ -2,7 +2,7 @@
 
 ## 打包tag上传到github
 ```shell
-export new_tag=v1.1.4
+export new_tag=v1.1.5
 git tag $new_tag
 git push origin $new_tag
 ```
