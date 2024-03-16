@@ -69,3 +69,9 @@ def add_tail(path: str, tail: str) -> str:
     paths = path.split('.')
     paths = paths[:-1] + [tail] + paths[-1]
     return ''.join(paths)
+
+def get_extension(path: str) -> str:
+    """
+    获取路径的扩展名
+    """
+    return path.split('.')[-1]
