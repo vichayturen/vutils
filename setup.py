@@ -1,8 +1,13 @@
 from setuptools import setup, find_packages
 
+
+with open("VERSION", "r", encoding="utf-8") as f:
+    version = f.read().strip()
+
+
 setup(
     name="vutils",
-    version="1.1.6",
+    version=version,
     author="Vichayturen",
     author_email="vichayturen@gmail.com",
     description="vichayturen's utils",
@@ -12,9 +17,18 @@ setup(
     extra_requires=[
         'openai',
         'torch',
+        'numpy'
         'pandas',
-        'openpyxl'
+        'matplotlib',
+        'tqdm',
+        'openpyxl',
+        'gradio'
     ],
     package_dir={"": "src"},
-    packages=find_packages("src")
+    packages=find_packages("src"),
+    entry_points={
+        "console_scripts": [
+            "vvcli=vutils.main:main",
+        ],
+    },
 )
