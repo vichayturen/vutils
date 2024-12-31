@@ -270,7 +270,7 @@ class UniversalModel(nn.Module):
         if name == "none":
             return None
         elif name == "cosine":
-            return torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=500, verbose=True, **kwargs)
+            return torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=500, **kwargs)
         elif name == "linear":
             return torch.optim.lr_scheduler.LinearLR(optimizer, **kwargs)
         elif name == "exponential":
