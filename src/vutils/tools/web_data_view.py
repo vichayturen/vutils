@@ -4,7 +4,7 @@ import argparse
 
 import gradio as gr
 
-from .. import io
+from vutils import io
 
 
 now_number = 0

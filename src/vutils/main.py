@@ -3,7 +3,8 @@ import sys
 import argparse
 from enum import unique, Enum
 
-from .data.web_data_view import web_data_view
+from .tools.web_data_view import web_data_view
+from .tools.compare_two_file import compare_two_file
 
 
 def ping():
@@ -20,9 +21,10 @@ Usage:
   vvcli <command> [<args>]
 
 Commands:
-  ping           Print a friendly greeting
-  web_data_view  Launch the data watching web demo
-  help           Get usage
+  ping              Print a friendly greeting
+  web_data_view     Launch the data reader web
+  compare_two_file  Compare two files
+  help              Get usage
 """)
 
 
@@ -30,6 +32,7 @@ Commands:
 class Command(str, Enum):
     PING = "ping"
     WEB_DATA_VIEW = "web_data_view"
+    COMPARE_TWO_FILE = "compare_two_file"
     HELP = "help"
 
 
@@ -39,6 +42,8 @@ def main():
         ping()
     elif command == Command.WEB_DATA_VIEW:
         web_data_view()
+    elif command == Command.COMPARE_TWO_FILE:
+        compare_two_file()
     elif command == Command.HELP:
         print_help()
     else:
