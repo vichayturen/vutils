@@ -87,7 +87,7 @@ class UniversalModel(nn.Module):
     ):
         assert batch_size % mini_batch_size == 0, "batch_size must be divisible by mini_batch_size!"
         data, data_size, train_data_size, eval_data_size = self._preprocessing_data(data, eval_data_ratio, shuffle_data)
-        labels = self._preprocessing_labels(data, label_key, data_size)
+        labels = self._preprocessing_outputs(data, label_key, data_size)
         self._inner_training_loop(
             data,
             labels,
@@ -237,17 +237,17 @@ class UniversalModel(nn.Module):
             random.shuffle(data)
         return data, data_size, train_data_size, eval_data_size
 
-    def _preprocessing_labels(
+    def _preprocessing_outputs(
             self,
             data,
             label_key,
             data_size,
     ) -> torch.Tensor:
-        print("### preprocessing labels...")
-        labels = [data[i][label_key] for i in range(data_size)]
-        labels = torch.LongTensor(labels).to(self.decoder.weight.device)
-        print("### preprocessing labels finished! ")
-        return labels
+        print("### preprocessing outputs...")
+        outputs = [data[i][label_key] for i in range(data_size)]
+        outputs = torch.LongTensor(outputs).to(self.decoder.weight.device)
+        print("### preprocessing outputs finished! ")
+        return outputs
 
     def _get_optimizer(self, name: Optimizer_Type, initial_lr: float, **kwargs) -> torch.optim.Optimizer:
         if name == "sgd":

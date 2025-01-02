@@ -50,7 +50,7 @@ class UniversalClassifier(UniversalModel):
     ):
         assert batch_size % mini_batch_size == 0, "batch_size must be divisible by mini_batch_size!"
         data, data_size, train_data_size, eval_data_size = self._preprocessing_data(data, eval_data_ratio, shuffle_data)
-        labels = self._preprocessing_labels(data, label_key, data_size)
+        labels = self._preprocessing_outputs(data, label_key, data_size)
         self._inner_training_loop(
             data,
             labels,

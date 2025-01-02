@@ -2,13 +2,12 @@
 import os
 import argparse
 
-import gradio as gr
-
-from vutils import io
+from .. import io
 
 
 now_number = 0
 def web_data_view():
+    import gradio as gr
     global now_number
     parser = argparse.ArgumentParser()
     parser.usage = "vvcli web [OPTIONS]"

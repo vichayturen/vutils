@@ -15,14 +15,16 @@ setup(
     license="MIT",
     install_requires=[],
     extra_requires=[
-        'openai',
-        'torch',
         'numpy'
         'pandas',
-        'matplotlib',
-        'tqdm',
         'openpyxl',
-        'gradio'
+        'matplotlib',
+        'scipy',
+        'scikit-learn',
+        'torch',
+        'tqdm',
+        'gradio',
+        'openai',
     ],
     package_dir={"": "src"},
     packages=find_packages("src"),

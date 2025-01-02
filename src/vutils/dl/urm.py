@@ -1,8 +1,12 @@
 
-from typing import Dict, Any, List, Union
+from typing import Dict, Any, List, Union, Literal
 
-import numpy as np
 import matplotlib.pyplot as plt
+from sklearn.base import TransformerMixin
+from sklearn.preprocessing import (
+    MinMaxScaler,
+    StandardScaler
+)
 import torch
 
 from .base import (
@@ -15,8 +19,12 @@ from .base import (
 from vutils.print_color import print_blue as print
 
 
+OUTPUT_SCALAR_TYPE = Literal["none", "min_max", "standard"]
+
+
 class UniversalRegressor(UniversalModel):
-    def __init__(self, feature_map: Dict[str, Dict[str, Any]], layer_num: int = 24):
+    def __init__(self, feature_map: Dict[str, Dict[str, Any]], layer_num: int = 24,
+                 output_scalar: Union[OUTPUT_SCALAR_TYPE, TransformerMixin] = "none"):
         """
         feature_map in format:
         ```csv
@@ -26,6 +34,21 @@ class UniversalRegressor(UniversalModel):
         ```
         """
         super().__init__(feature_map, 1, layer_num)
+        if output_scalar == "none":
+            self.output_scalar = None
+        elif output_scalar == "min_max":
+            self.output_scalar = MinMaxScaler()
+        elif output_scalar == "standard":
+            self.output_scalar = StandardScaler()
+        else:
+            self.output_scalar = output_scalar
+
+    @torch.inference_mode()
+    def predict(self, x):
+        y = super().predict(x)
+        if self.output_scalar is not None:
+            y = self.output_scalar.inverse_transform(y)
+        return y
 
     def forward(self, xs: Union[Dict[str, Any], List[Dict[str, Any]]]):
         categorical, numerical = self._get_feature_initial_representation(xs)
@@ -50,7 +73,7 @@ class UniversalRegressor(UniversalModel):
     ):
         assert batch_size % mini_batch_size == 0, "batch_size must be divisible by mini_batch_size!"
         data, data_size, train_data_size, eval_data_size = self._preprocessing_data(data, eval_data_ratio, shuffle_data)
-        labels = self._preprocessing_labels(data, label_key, data_size)
+        labels = self._preprocessing_outputs(data, label_key, data_size)
         self._inner_training_loop(
             data,
             labels,
@@ -92,14 +115,16 @@ class UniversalRegressor(UniversalModel):
         plt.legend()
         plt.show()
 
-    def _preprocessing_labels(
+    def _preprocessing_outputs(
             self,
             data,
             label_key,
             data_size,
     ) -> torch.Tensor:
-        print("### preprocessing labels...")
-        labels = [data[i][label_key] for i in range(data_size)]
-        labels = torch.Tensor(labels).to(self.decoder.weight.device)
-        print("### preprocessing labels finished! ")
-        return labels
+        print("### preprocessing outputs...")
+        outputs = [data[i][label_key] for i in range(data_size)]
+        if self.output_scalar is not None:
+            outputs = self.output_scalar.fit_transform(outputs)
+        outputs = torch.Tensor(outputs).to(self.decoder.weight.device)
+        print("### preprocessing outputs finished! ")
+        return outputs
