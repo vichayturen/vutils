@@ -136,8 +136,7 @@ class UniversalModel(nn.Module):
                     batch_data = data[step + mini_step: min(step + mini_step + mini_batch_size, train_data_size)]
                     batch_label = labels[step + mini_step: min(step + mini_step + mini_batch_size, train_data_size)]
                     y = self(batch_data)
-                    loss = loss_fct(y, batch_label)
-                    loss = self._on_calculate_loss(loss, batch_data, y)
+                    loss = self._on_calculate_loss(loss_fct, batch_data, y, batch_label)
                     loss = self._do_regularization(loss, regularization)
                     self.train_loss_record.append(float(loss))
                     loss.backward()
@@ -169,9 +168,9 @@ class UniversalModel(nn.Module):
         """can be overridden"""
         pass
 
-    def _on_calculate_loss(self, loss, batch_data, y):
+    def _on_calculate_loss(self, loss_fct, batch_data, y, batch_label):
         """can be overridden"""
-        return loss
+        return loss_fct(y, batch_label)
 
     def _on_backward(self):
         """can be overridden"""
