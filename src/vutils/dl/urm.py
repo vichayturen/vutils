@@ -11,6 +11,7 @@ import torch
 
 from .base import (
     UniversalModel,
+    Feature_Map_TYPE,
     Optimizer_Type,
     Lr_Scheduler_Type,
     Loss_Function_Type,
@@ -23,7 +24,7 @@ OUTPUT_SCALAR_TYPE = Literal["none", "min_max", "standard"]
 
 
 class UniversalRegressor(UniversalModel):
-    def __init__(self, feature_map: Dict[str, Dict[str, Any]], layer_num: int = 24,
+    def __init__(self, feature_map: Feature_Map_TYPE, layer_num: int = 24,
                  output_scalar: Union[OUTPUT_SCALAR_TYPE, TransformerMixin] = "none"):
         """
         feature_map in format:

@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 
 from .base import (
     UniversalModel,
+    Feature_Map_TYPE,
     Optimizer_Type,
     Lr_Scheduler_Type,
     Loss_Function_Type,
@@ -15,7 +16,7 @@ from .base import (
 
 
 class UniversalClassifier(UniversalModel):
-    def __init__(self, feature_map: Dict[str, Dict[str, Any]], label_size: int = 2, layer_num: int = 24):
+    def __init__(self, feature_map: Feature_Map_TYPE, label_size: int = 2, layer_num: int = 24):
         """
         feature_map in format:
         ```csv

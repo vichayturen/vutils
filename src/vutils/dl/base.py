@@ -13,6 +13,7 @@ from .mlp import UniversalMlp
 from vutils.print_color import print_blue as print
 
 
+Feature_Map_TYPE = Dict[str, Dict[str, Any]]
 Optimizer_Type = Literal["sgd", "momentum", "adagrad", "rmsprop", "adam", "adamw"]
 Lr_Scheduler_Type = Literal["none", "cosine", "linear", "exponential", "polynomial", "step", "multistep", "cycle", "cosine_warm"]
 Loss_Function_Type = Literal["auto", "mse", "cross_entropy"]
@@ -20,7 +21,7 @@ Regularization_Type = Literal["none", "l1", "l2"]
 
 
 class UniversalModel(nn.Module):
-    def __init__(self, feature_map: Dict[str, Dict[str, Any]], label_size: int = 2, layer_num: int = 24):
+    def __init__(self, feature_map: Feature_Map_TYPE, label_size: int = 2, layer_num: int = 24):
         """
         feature_map in format:
         ```csv
@@ -39,11 +40,11 @@ class UniversalModel(nn.Module):
         self.numerical2id = {}
         numerical_id = 0
         for name, info in feature_map.items():
-            if info["type"] == "categorical":
+            if info["type"].lower() == "categorical":
                 for val in info["values"]:
                     self.categorical2id[f"{name}->{val}"] = categorical_id
                     categorical_id += 1
-            elif info["type"] == "numerical":
+            elif info["type"].lower() == "numerical":
                 self.numerical2id[name] = numerical_id
                 numerical_id += 1
             else:
